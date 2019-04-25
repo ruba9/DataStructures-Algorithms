@@ -1,0 +1,47 @@
+#include<iostream>
+using namespace std;
+
+void swap(int &x,int &y) {
+	int temp;
+	temp = x;
+	x = y;
+	y = temp;
+}
+
+int Partition(int arr[], int low, int high) {
+	int pivot = arr[high];
+	int i = low - 1;
+	for (int j = low; j < high; j++) {
+		if (arr[j] < pivot) {
+			++i;
+			if (i != j) {
+			  swap(arr[i], arr[j]);
+		  }
+		}
+	}
+	swap(arr[i + 1], arr[high]);
+
+	return i + 1;
+}
+
+void QuickSort(int arr[], int low, int high) {
+	if (low < high) {
+		int piv = Partition(arr,low,high);
+		 QuickSort(arr, low, piv - 1);
+		 QuickSort(arr, piv + 1, high);
+
+	}
+}
+
+
+int main() {
+	int arr[5] = { 737,838,93,3,33 };
+	QuickSort(arr,0,4);
+
+	for (int i = 0; i < 5; i++) {
+		cout << arr[i] << endl;
+	}
+	
+	system("pause");
+	return 0;
+}
