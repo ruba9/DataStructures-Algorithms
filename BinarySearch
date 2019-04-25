@@ -1,0 +1,20 @@
+
+int BinarySearch(int arr[], int size, int lo, int hi, int key) {
+	hi = size - 1;
+	lo = 0;
+	while (lo < hi) {
+		int mid = lo + hi / 2;
+		if (key == mid) {
+			return mid;
+		}
+		else if (mid > key) {
+			BinarySearch(arr, size, lo, mid - 1, key);
+		}
+		else if (mid < key) {
+			BinarySearch(arr, size, mid + 1, hi, key);
+		}
+
+	}
+
+	return -1;
+}
