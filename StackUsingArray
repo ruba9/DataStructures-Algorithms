@@ -1,0 +1,65 @@
+#include<iostream>
+using namespace std;
+
+class Stack {
+public:
+	int top;
+	int size;
+	int * arr;
+
+	Stack(int size,int arr[]) {
+		top = -1;
+		this->size = size;
+		arr = new int[size];
+	}
+	bool isEmpty() {
+		if (top == -1) return true;
+		else return false;
+	}
+	bool isFull() {
+		if (top == size - 1) {
+			return true;
+		}
+		else return false;
+	}
+	void push(int v) {
+		if (isEmpty()) {
+			arr[++top] = v;
+		}
+		else if (isFull()) {
+			cout << "Stack Overflow" << endl;
+		}
+
+	}
+	int pop() {
+		if (isEmpty()) {
+			return NULL;
+		}
+		else {
+			return arr[--top];
+		}
+	}
+	int getTop() {
+		if (isEmpty())
+			return NULL;
+		else
+			return arr[top];
+	}
+	void Print() {
+		if (isEmpty())
+			return;
+		else
+			for (int i = 0; i < top; i++) {
+				cout << arr[i] << endl;
+			}
+	}
+};
+
+int main() {
+
+
+
+
+	system("pause");
+	return 0;
+}
