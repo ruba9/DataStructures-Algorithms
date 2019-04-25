@@ -1,0 +1,255 @@
+//DLL 
+#include<iostream>
+using namespace std;
+
+class Node {
+public:
+	int val;
+	Node * next;
+	Node * prev;
+	Node(int val, Node * next, Node* prev) {
+		this->val = val;
+		this->next = next;
+		this->prev = prev;
+	}
+	
+};
+
+class DLL {
+public:
+	Node* head;
+	Node * tail;
+	DLL() {
+		head = tail = NULL;
+	}
+	bool isEmpty() {
+		if (head == NULL) {
+			return true;
+		}
+		else return false;
+	} 
+	void AddToHead(int v) {
+		Node * n = new Node(v, NULL, NULL);
+		if (isEmpty()) {
+			head = tail = n;
+		}
+		else {
+			Node * newNode = new Node(v, head, NULL);
+			head->prev = newNode;
+			head = newNode;
+		}
+	}
+	 
+	void AddToTail(int v) {
+		Node * n = new Node(v, NULL, NULL);
+		if (isEmpty()) {
+			head = tail = n;
+		}
+		else {
+			Node * newNode = new Node(v, NULL, tail);
+			tail->next = newNode;
+			tail = newNode;
+		}
+	}
+
+	void AddToIndex(int v, int index) {
+		if (isEmpty() || index == 0) {
+			AddToHead(v);
+		}
+		else {
+			Node * p = head;
+			int i = 0;
+			for (; i < index && p != NULL; p = p->next, i++);
+			if (i != index || p == tail) {
+				AddToTail(v);
+			}
+			else {
+				Node * pred = p->prev;
+				Node *  newNode = new Node(v, p, pred);
+				p->prev = newNode;
+				pred->next = newNode;
+			}
+		}
+
+	}
+	int getHeadVal() {
+		if (!isEmpty()) 
+			return head->val;
+	}
+
+	int getTailVal() {
+		if (!isEmpty())
+			return tail->val;
+	}
+	int getVal(int index) {
+		while (!isEmpty()) {
+			if (index == 0) {
+				return getHeadVal();
+			}
+			else {
+				int i;
+				Node * p = head;
+				for ( i = 0; i < index && p != NULL; i++, p = p->next);
+				if (i != index || p == tail) {
+					return getTailVal();
+				}
+				else {
+					return p->val;
+				}
+			}
+		}
+	}
+	void replaceVal(int v, int index) {
+		if (isEmpty()) {
+			return;
+		}
+		else {
+			if (index == 0) {
+				head->val = v;
+			}
+			else {
+				Node * p = head;
+				int i = 0;
+				for (; i < index, p != NULL; p = p->next, i++);
+				if (i != index || p == tail) {
+					tail->val = v;
+				}
+				else {
+					p->val = v;
+				}
+			}
+		}
+	}
+
+	void DeleteHead() {
+		if (isEmpty()) {
+			return;
+		}
+		else {
+			if (head == tail) {
+				Node * p = head;
+				head = tail = NULL;
+				head->next = head->prev = NULL;
+				delete p;
+		   }
+			else {
+				Node * p = head;
+				head = p->next;
+				p->next = p->prev = nullptr;
+				delete p;
+			}
+		}
+	}
+
+	void DeleteTail() {
+		if (isEmpty()) {
+			return;
+		}
+		else if (head == tail) {
+			Node * p = tail;
+			head = tail = NULL;
+			p->next = p->prev = NULL;
+			delete p;
+		}
+		else {
+			Node * p = tail;
+			tail = tail->prev;
+			tail->next = NULL;
+			delete p;
+		}
+	}
+    
+	void DeleteAtIndex(int index) {
+		if (isEmpty()) {
+			return;
+		}
+		else if (index == 0) {
+			DeleteHead();
+		}
+		else {
+			Node * p = head;
+			int i = 0;
+			for (; i < index && p != NULL; i++, p = p->next);
+			if (i != index || p == tail) {
+				DeleteTail();
+			}
+			else {
+				Node * pred = p->prev;
+				Node * succ = p->next;
+				pred->next = succ->prev;
+				succ->prev = succ->next;
+				p->next = p->prev = NULL;
+				delete p;
+
+			}
+		}
+	}
+	void Merge(DLL dl) {
+		if (isEmpty()) {
+			head = dl.head;
+			tail = dl.tail;
+		}
+		else {
+			DLL newDL;
+			Node * p1 = head;
+			Node * p2 = dl.head;
+			while (p1 != NULL || p2 != NULL) {
+				if (p1 == NULL) {
+					newDL.AddToTail(p2->val);
+					p2 = p2->next;
+				}
+				else if (p2 == NULL) {
+					newDL.AddToTail(p1->val);
+					p1 = p1->next;
+				}
+				else {
+					if (p1->val >= p2->val) {
+						newDL.AddToTail(p2->val);
+						p2 = p2->next;
+					}
+					else {
+						newDL.AddToTail(p1->val);
+						p1 = p1->next;
+					}
+				}
+			}
+			head = newDL.head;
+			tail = newDL.tail;
+			newDL.head = NULL;
+			newDL.tail = NULL;
+		}
+		
+	}
+
+	int countNodes() {
+		int c = 0;
+		if (isEmpty()) {
+			return NULL;
+		}
+		else {
+			Node * p = head;
+			for (; p != NULL; p = p->next, c++);
+		}
+		return c;
+	}
+	void PrintList() {
+		Node * p = head;
+		for (; p != NULL; p = p->next) {
+			cout << p->val << endl;
+		}
+	}
+ };
+
+
+int main() {
+	DLL DL;
+	DL.AddToHead(1);
+	DL.AddToHead(2);
+	DL.AddToTail(3);
+	DL.PrintList();
+	DL.countNodes();
+
+
+	system("pause");
+	return 0;
+}
