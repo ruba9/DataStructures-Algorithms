@@ -1,0 +1,73 @@
+#include<iostream>
+using namespace std;
+
+class Queue {
+public:
+	int first, last, size, item;
+	int * arr;
+	Queue(int size) {
+		first = last = 0;
+		this->size = size;
+		arr = new int[size];
+		item = 0;
+	}
+	bool isEmpty() {
+		if (item == 0) {
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	bool isFull() {
+
+		if (item == size - 1) return true;
+		else return false;
+	}
+	void enqueue(int v) {
+		if (!isFull()) {
+			arr[last++] = v;
+			item++;
+		}
+		else cout << "Queue is Full" << endl;
+	}
+	int Dequeue() {
+		if (!isEmpty()) {
+			return arr[first++];
+			item--;
+		}
+		else {
+			cout << "Queue is Empty" << endl;
+			return NULL;
+		}
+	}
+
+	void print() {
+		if (isEmpty()) {
+			cout << "Queue is Empty" << endl;
+		}
+		else {
+			int i = first;
+			for (; i < last; i++) {
+				cout << arr[i] << endl;
+			}
+		}
+	}
+
+};
+
+int main() {
+
+	Queue q(10);
+	int v;
+	q.enqueue(1);
+	q.enqueue(2);
+	q.enqueue(3);
+	v = q.Dequeue();
+	cout << "Dequeued val = "<< v << endl;
+	q.print();
+
+	system("pause");
+	return 0;
+}
