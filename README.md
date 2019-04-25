@@ -1,2 +1,2 @@
 # DataStructures-Algorithms
-Some Data Structures and Algorithms Implementation in C++
+Some Data Structures and Algorithms Implementations in C++
