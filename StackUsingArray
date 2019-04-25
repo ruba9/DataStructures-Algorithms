@@ -7,7 +7,7 @@ public:
 	int size;
 	int * arr;
 
-	Stack(int size,int arr[]) {
+	Stack(int size) {
 		top = -1;
 		this->size = size;
 		arr = new int[size];
