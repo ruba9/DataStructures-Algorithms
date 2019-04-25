@@ -1,0 +1,63 @@
+/*#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+using namespace std;
+
+class stack {
+public:
+	int flag;
+	int arr[100];
+	stack() {
+		flag = 0;
+	}
+	bool isEmpty() {
+		if (flag == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	void push(int c) {
+		arr[flag++] = c;
+	}
+	int pop() {
+		return arr[--flag];
+	}
+};
+
+
+
+
+int main() {
+	freopen("Text.txt", "r", stdin);
+	stack  a;
+	int adj[6][6] = { 0 };
+	bool visited[6] = { 0 };
+	int temp1, temp2;
+	for (int i = 0; i < 4; i++) {
+		cin >> temp1 >> temp2;
+		adj[temp1][temp2] = 1;
+		//adj[temp2][temp1] = 1;
+	}
+	int current = 1;
+	a.push(current);
+	visited[current] = true;
+	while (!a.isEmpty()) {
+		current = a.pop();
+		cout << current << endl;
+		for (int i = 0; i < 5; i++) {
+			if (i != current && adj[current][i] != 0 && visited[i] == false) {
+				a.push(i);
+				visited[i] = true;
+			}
+		}
+	}
+
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+			cout << adj[i][j] << endl;
+		}
+	}
+	system("pause");
+	return 0;
+*/
