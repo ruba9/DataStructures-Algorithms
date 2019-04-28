@@ -1,0 +1,164 @@
+//SLL
+#include<iostream>
+using namespace std;
+
+class Node {
+public:
+	int Data;
+	Node *next;
+	Node(int Data, Node * next) {
+		this->Data = Data;
+		this->next = next;
+	}
+};
+
+class SLL {
+public:
+	Node *head, *tail;
+	SLL() {
+		head = tail = NULL;
+	}
+	bool isEmpty() {
+		if (head == NULL) return true;
+		else
+			return false;
+	}
+	void AddToHead(int v) {
+		Node * n = new Node(v, NULL);
+		if (isEmpty()) {
+			head = tail = n;
+		}
+		else {
+			Node * n = new Node(v, head);
+			head = n;
+		}
+   }
+	void AddToTail(int v) {
+		Node * n = new Node(v, NULL);
+		if (isEmpty()) {
+			head = tail = n;
+		}
+		else {
+			tail->next = n;
+			tail = n;
+		}
+	}
+	void InsertAtIndex(int v,int index) {
+		Node * n = new Node(v, NULL);
+		if (isEmpty() || index == 0) {
+			AddToHead(v);
+		}
+		else {
+			Node * pred = head;
+			int i = 0;
+			for (; i != index-1 && pred->next != NULL; pred = pred->next, i++);
+			if (i != index-1 || pred == tail) {
+				AddToTail(v);
+			}
+			else {
+				Node * p = pred->next;
+				Node * newNode = new Node(v, p);
+				pred->next = newNode;
+			}
+		}
+	}
+	void DeleteAtHead() {
+		if (isEmpty()) {
+			cout << "list is Empty" << endl;
+		}
+		else {
+			if (head == tail) {
+				Node * p = head;
+				head->next = NULL;
+				head = tail = NULL;
+				delete p;
+			}
+			else {
+				Node * p = head;
+				head = head->next;
+				p->next = NULL;
+				delete p;
+			}
+		}
+	}
+	void DeleteAtTail() {
+		if (isEmpty()) {
+			cout << "list is Empty" << endl;
+		}
+		else {
+			if (head == tail) {
+				Node * p = head;
+				head->next = NULL;
+				head = tail = NULL;
+				delete p;
+			}
+			else {
+				Node * p = tail;
+				Node * p1 = head;
+				for (; p1->next->next != NULL; p1 = p1->next);
+					tail = p1;
+					p1->next = NULL;
+				    p->next = NULL;
+				    delete p;
+			}
+		}
+	}
+	void DeleteAtIndex(int index) {
+		if (isEmpty()) {
+			cout << "list is Empty" << endl;
+		}
+		else {
+			if (index == 0) {
+				DeleteAtHead();
+			}
+			else {
+				Node * p = head;
+				int i = 0;
+				for (; p != NULL && i != index-1; i++, p = p->next);
+				if (i != index-1 || p == tail) {
+					DeleteAtTail();
+				}
+				else {
+					Node * p1 = p->next;
+					Node * p2 = p->next->next;
+					p->next = p2;
+					p1->next = NULL;
+					delete p1;
+				}
+			}
+		}
+	}
+	void print() {
+		Node * p = head;
+		if (isEmpty()) {
+			cout << "Nothing in here, List is NULL!" << endl;
+		}
+		else {
+			for (; p != NULL; p = p->next) {
+				cout << p->Data << endl;
+			}
+		}
+	}
+};
+
+
+int main() {
+	SLL s;
+	s.AddToHead(1);
+	s.AddToTail(2);
+	s.AddToHead(3);
+	s.InsertAtIndex(4, 3);
+	s.AddToTail(5);
+	s.AddToTail(6);
+	s.AddToTail(7);
+	s.InsertAtIndex(10, 3);
+
+	s.print();
+	s.DeleteAtHead();
+	s.DeleteAtIndex(3);
+	s.DeleteAtTail();
+	s.print();
+
+	system("pause");
+	return 0;
+}
