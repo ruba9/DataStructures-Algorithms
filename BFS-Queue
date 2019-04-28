@@ -1,0 +1,80 @@
+#include<iostream>
+using namespace std;
+
+class Queue {
+public:
+	int * arr;
+	int size;
+	int cnt;
+	int last, first;
+	Queue(int size) {
+		cnt = 0;
+		this->size = size;
+		arr = new int[size];
+		last = first = 0;
+	}
+	bool isEmpty() {
+		if (cnt == 0) {
+			return true;
+		}
+		else return false;
+	}
+
+	void Enqueue(int v) {
+		if (last == size - 1) {
+			cout << "Stack is Full" << endl;
+		}
+		else {
+			++cnt;
+			arr[last++] = v;
+		}
+	}
+	int Dequeue() {
+		if (isEmpty()) {
+			return NULL;
+		}
+		else  {
+			--cnt;
+			return arr[first++];
+
+		}
+	}
+	void print() {
+		for (int i = first; i < last; i++) {
+			cout << arr[i] << endl;
+		}
+	}
+};
+
+
+void BFS(int current,int adjmat[][11],bool visited[11], int nodes) {
+	int s;
+	Queue q(11);
+	q.Enqueue(current);
+	visited[current] = 1;
+	while (!q.isEmpty()) {
+	     s = q.Dequeue();
+		 cout << s << endl;
+		 for (int i = 1; i <= nodes; i++) {
+			 if (visited[i] == 0 && adjmat[s][i] == 1) {
+				 q.Enqueue(i);
+				 visited[i] = 1;
+			 }
+		 }
+	}
+}
+
+int main() {
+	int adjmat[11][11] = { 0 };
+	bool isVisited[11] = { 0 };
+	int nodes, edges;
+	cin >> nodes >> edges;
+	for (int j = 0, v, u; j < edges; j++) {
+		cin >> u >> v;
+		adjmat[u][v] = 1;
+	}
+	BFS(1, adjmat, isVisited, nodes);
+
+	system("pause");
+	return 0;
+}
