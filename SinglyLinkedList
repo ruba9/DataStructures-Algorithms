@@ -154,6 +154,7 @@ int main() {
 	s.InsertAtIndex(10, 3);
 
 	s.print();
+	cout<<"----------"<<endl;
 	s.DeleteAtHead();
 	s.DeleteAtIndex(3);
 	s.DeleteAtTail();
