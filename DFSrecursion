@@ -1,0 +1,31 @@
+//DFS recursion
+
+#include <iostream>
+using namespace std;
+
+void DFS(int adjmat[][5],int current,bool isVisited[],int size) {
+	for (int i = 0; i < size; i++) {
+		if (adjmat[current][i] != 0 && isVisited[i] != true) {
+			isVisited[i] = true;
+			DFS(adjmat, i, isVisited, size);
+		}
+	}
+	cout << current << endl;
+}
+int main() {
+	int adjmat[][5] = { 0 };
+	bool isVisited[5] = { 0 };
+	int nodes, edges;
+	cin >> nodes >> edges;
+	int temp1, temp2;
+	for (int i = 0; i < edges; i++) {
+		cin >> temp1 >> temp2;
+		adjmat[temp1][temp2] = 1;
+	}
+	isVisited[0] = true;
+	DFS(adjmat, 0, isVisited, nodes);
+
+
+system("pause");
+return 0;
+}
