@@ -1,0 +1,87 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<iostream>
+using namespace std;
+
+int abs(int x) {
+	if (x < 0) 
+		return -x;
+	else
+		return x;
+}
+
+bool allvisited(bool visited[], int nodes)
+{
+	bool check =true;
+	for (int i = 0; i < nodes; i++) {
+		if (!visited[i] && i != 1) {
+			check = false;
+		}
+	}
+	return check;
+}
+
+
+int DFS(int adjmat[][10], bool visited[], int distance, int current, int min, int nodes, int counter) {
+	visited[current] = true;
+	if (counter == nodes - 2) {
+		if (distance + adjmat[1][current] < min || min == -1) {
+			min = distance + adjmat[1][current];
+		}
+	}
+	else {
+		for (int i = 0; i < nodes; i++) {
+			if (adjmat[current][i] != 0 && visited[i] == 0 && i != 1) {
+				distance += adjmat[current][i];
+				counter++;
+				min = DFS(adjmat, visited, distance, i, min, nodes, counter);
+				counter--;
+				visited[i] = false;
+				distance -= adjmat[current][i];
+			}
+		}
+	}
+	return min;
+}
+
+int main() {
+	freopen("Text.txt", "r", stdin);
+
+	int testcases,temp,min;
+	int adjmat[10][10] = { 0 };
+	bool isVisited[10] = { 0 };
+	int nodes;
+	int distance = 0;
+	int x[10];
+	int y[10];
+	cin >> testcases;
+	for (int i = 0; i < testcases; i++) {
+		cin >> nodes;
+		cin >> x[0];
+		cin >> y[0];
+		cin >> x[1];
+		cin >> y[1];
+		for (int i = 0; i < nodes; i++) {
+			cin >> x[i + 2] >> y[i + 2];
+		}
+		for (int i = 0; i < nodes + 2; i++) {
+			for (int j = i + 1; j < nodes + 2; j++) {
+				if (!(i == 0 && j == 1)) {
+					temp = abs(x[i] - x[j]) + abs(y[i] - y[j]);
+					adjmat[i][j] = temp;
+					adjmat[j][i] = temp;
+				}
+			}
+		}
+
+		min = -1;
+		int count = 0;
+		min = DFS(adjmat, isVisited, distance, 0, min, nodes + 2, 0);
+		cout << "#" << testcases << " " << min << " ";
+	}
+	
+	
+
+	system("pause");
+	return 0;
+}
